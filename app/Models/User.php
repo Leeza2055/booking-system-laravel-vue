@@ -52,11 +52,17 @@ class User extends Authenticatable implements PasskeyUser
         ];
     }
 
+    /**
+     * @return HasOne<Provider, $this>
+     */
     public function provider(): HasOne
     {
         return $this->hasOne(Provider::class);
     }
 
+    /**
+     * @return HasMany<Booking, $this>
+     */
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class, 'customer_id');

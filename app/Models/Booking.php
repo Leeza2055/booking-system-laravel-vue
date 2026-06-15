@@ -19,21 +19,33 @@ class Booking extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Provider, $this>
+     */
     public function provider(): BelongsTo
     {
         return $this->belongsTo(Provider::class);
     }
 
+    /**
+     * @return BelongsTo<Service, $this>
+     */
     public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'customer_id');
     }
 
+    /**
+     * @return HasOne<Payment, $this>
+     */
     public function payment(): HasOne
     {
         return $this->hasOne(Payment::class);

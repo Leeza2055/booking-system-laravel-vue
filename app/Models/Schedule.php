@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Schedule extends Model
 {
+    /**
+     * @return BelongsTo<Provider, $this>
+     */
     public function provider(): BelongsTo
     {
         return $this->belongsTo(Provider::class);
