@@ -3,12 +3,17 @@
 namespace App\Models;
 
 use App\Enums\DayOfWeek;
+use Database\Factories\ScheduleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property DayOfWeek $day_of_week
+ */
 class Schedule extends Model
 {
+    /** @use HasFactory<ScheduleFactory> */
     use HasFactory;
 
     protected function casts(): array

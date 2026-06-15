@@ -11,11 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ServiceFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    /** @var array<string, array<int, string>> */
     private array $servicesBySpecialization = [
         'General Physician' => ['General Consultation', 'Follow-up Visit', 'Health Checkup'],
         'Cardiologist' => ['Cardiac Consultation', 'ECG', 'Stress Test'],
@@ -25,6 +21,11 @@ class ServiceFactory extends Factory
         'Dentist' => ['Dental Checkup', 'Teeth Cleaning', 'Cavity Filling'],
     ];
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [

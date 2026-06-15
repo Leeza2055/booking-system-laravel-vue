@@ -6,6 +6,9 @@ use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property PaymentStatus $status
+ */
 class Payment extends Model
 {
     protected function casts(): array
