@@ -1,14 +1,8 @@
+import type { User } from './auth';
+
 export * from './auth';
 export * from './navigation';
 export * from './ui';
-
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    role: string;
-}
-
 export interface Service {
     id: number;
     name: string;
@@ -24,7 +18,7 @@ export interface Provider {
     bio: string | null;
     base_fee: number;
     is_active: boolean;  
-    services: Service[];
+    services?: Service[];
 }
 
 
