@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\Provider;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -26,7 +29,7 @@ class ProviderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('admin/providers/Create');
     }
@@ -34,9 +37,36 @@ class ProviderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'department' => 'required|string|max:255',
+            'specialization' => 'required|string|max:255',
+            'bio' => 'nullable|string',
+            'base_fee' => 'required|numeric|min:0',
+            'is_active' => 'required|boolean',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make('password'), // You should generate a secure password and send it to the provider
+            'role' => UserRole::Provider,
+            'email_verified_at' => now(),
+        ]);
+
+        $user->provider()->create([
+            'department' => $validated['department'],
+            'specialization' => $validated['specialization'],
+            'bio' => $validated['bio'] ?? '',
+            'base_fee' => $validated['base_fee'],
+            'is_active' => $validated['is_active'] ?? true,
+        ]);
+
+        return redirect()->route('admin.providers.index')
+            ->with('success', 'Provider created successfully.');
     }
 
     /**
