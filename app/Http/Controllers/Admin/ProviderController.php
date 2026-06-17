@@ -3,16 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Provider;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ProviderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
-        //
+        $providers = Provider::with('user')->latest()->get();
+
+        return Inertia::render('admin/providers/Index', [
+            'providers' => $providers,
+        ]);
     }
 
     /**
@@ -20,21 +27,13 @@ class ProviderController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('admin/providers/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
     {
         //
     }
