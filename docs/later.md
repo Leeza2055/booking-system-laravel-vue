@@ -27,6 +27,9 @@ Things intentionally left out of current scope. Revisit after core is complete.
 - [ ] Recurring / repeat appointments
 - [ ] Waitlist when all slots are full
 - [ ] Cancellation and refund workflow
+- [ ] Provider hard delete — handle restrictOnDelete constraint, 
+      cancel/reassign bookings, or soft delete with booking history preserved
+- [ ] Provider deactivation toggle button in admin index (PATCH is_active)
 
 ## Product (if taken to market)
 - [ ] Public shareable provider profile page

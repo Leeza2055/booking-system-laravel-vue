@@ -1,21 +1,15 @@
-# API Endpoints
+## Providers (Public)
+| Method | URL | Name | Description |
+|--------|-----|------|-------------|
+| GET | /providers | providers.index | List active providers |
+| GET | /providers/{provider} | providers.show | Provider detail page |
 
-> Fill this file as routes are built. One section per resource.
-
-## Auth
-> Add after Week 1 auth setup is confirmed working.
-
-## Providers
-> Add after provider CRUD is built (Week 2).
-
-## Services
-> Add after service CRUD is built (Week 2).
-
-## Schedules
-> Add after schedule management is built (Week 2).
-
-## Bookings
-> Add after booking engine is built (Week 3-4).
-
-## Payments
-> Add after Khalti integration is built (Week 5).
+## Providers (Admin)
+| Method | URL | Name | Description |
+|--------|-----|------|-------------|
+| GET | /admin/providers | admin.providers.index | List all providers |
+| GET | /admin/providers/create | admin.providers.create | Create form |
+| POST | /admin/providers | admin.providers.store | Store new provider |
+| GET | /admin/providers/{provider}/edit | admin.providers.edit | Edit form |
+| PUT | /admin/providers/{provider} | admin.providers.update | Update provider |
+| DELETE | /admin/providers/{provider} | admin.providers.destroy | Delete provider |

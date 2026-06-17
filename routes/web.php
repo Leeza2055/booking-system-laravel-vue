@@ -11,7 +11,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('providers', AdminProviderController::class)->except(['show']);
+    Route::resource('providers', AdminProviderController::class)->except(['show', 'delete']);
 });
 
 Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index');

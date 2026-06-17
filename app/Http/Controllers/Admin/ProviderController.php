@@ -99,12 +99,4 @@ class ProviderController extends Controller
         return redirect()->route('admin.providers.index')
             ->with('success', 'Provider updated successfully.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
