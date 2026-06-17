@@ -1,8 +1,6 @@
 <script setup lang="ts">
     import { Head, Link } from '@inertiajs/vue3';
     import { Button } from '@/components/ui/button'
-    import { index, create, edit } from '@/routes/admin/providers';
-    import type { Provider } from '@/types';
     import {
     Table,
     TableBody,
@@ -12,6 +10,10 @@
     TableHeader,
     TableRow,
     } from '@/components/ui/table';
+    import { index, create, edit } from '@/routes/admin/providers';
+    import type { Provider } from '@/types';
+
+
 
     defineProps<{
         providers: Provider[];

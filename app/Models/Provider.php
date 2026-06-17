@@ -13,6 +13,15 @@ class Provider extends Model
     /** @use HasFactory<ProviderFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'department',
+        'specialization',
+        'bio',
+        'base_fee',
+        'is_active',
+    ];
+
     /**
      * Get the attributes that should be cast.
      *
