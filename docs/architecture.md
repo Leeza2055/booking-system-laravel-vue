@@ -72,6 +72,14 @@ The starter kit ships with Larastan (PHPStan for Laravel). The `composer types:c
 ### CI matrix: PHP 8.4 and 8.5
 Both versions confirmed green. PHP 8.3 was removed — `composer.lock` contains Symfony 8.1 packages requiring PHP >=8.4.1. `composer.json` declares `"php": "^8.4"`.
 
+### Ownership enforcement in provider-scoped controllers
+Provider controllers scope all queries to `Auth::user()->provider` — a provider can only see and modify their own resources. Ownership is explicitly verified in `edit` and `update` methods with `abort(403)` rather than relying solely on query scoping.
+
+### Role-based middleware
+Two custom middleware classes gate access by role. Registered as aliases in `bootstrap/app.php` and applied to route groups:
+- `admin` → `EnsureUserIsAdmin` — aborts 403 if `user->role !== UserRole::Admin`
+- `provider` → `EnsureUserIsProvider` — aborts 403 if `user->role !== UserRole::Provider`
+
 ---
 
 ## Folder Structure
@@ -85,21 +93,46 @@ app/
     Booking.php
     Payment.php
   Http/
-    Controllers/      — one controller per resource
-    Middleware/        — role-based middleware (EnsureIsProvider, EnsureIsAdmin)
+    Controllers/
+      ProviderController.php           — public provider listing and detail
+      Admin/
+        ProviderController.php         — admin provider CRUD
+      Provider/
+        ServiceController.php          — provider-scoped service CRUD
+    Middleware/
+      EnsureUserIsAdmin.php            — aborts 403 if role != Admin
+      EnsureUserIsProvider.php         — aborts 403 if role != Provider
   Services/
-    SlotGeneratorService.php   — slot generation logic (Week 3)
+    SlotGeneratorService.php           — slot generation logic (Week 3)
 resources/
   js/
-    Pages/            — Vue page components (Inertia)
-    Components/       — reusable Vue components
-docs/                 — this folder
+    pages/
+      providers/
+        Index.vue                      — public provider listing
+        Show.vue                       — public provider detail with services
+      admin/
+        providers/
+          Index.vue                    — admin provider table
+          Create.vue                   — admin create provider + user form
+          Edit.vue                     — admin edit provider form
+      provider/
+        services/
+          Index.vue                    — provider service table
+          Create.vue                   — provider create service form
+          Edit.vue                     — provider edit service form
+    routes/                            — Wayfinder generated route functions
+    types/
+      index.ts                         — shared TypeScript interfaces (Provider, Service)
+      auth.ts                          — User, Auth types (canonical User definition)
+    components/
+      ui/                              — shadcn components
+docs/                                  — project documentation
 tests/
-  Feature/            — HTTP-level tests
-  Unit/               — unit tests for SlotGeneratorService
+  Feature/                             — HTTP-level tests
+  Unit/                                — unit tests for SlotGeneratorService
 .github/workflows/
-  tests.yml           — CI pipeline (PHP 8.4, 8.5)
-  lint.yml            — code style checks
+  tests.yml                            — CI pipeline (PHP 8.4, 8.5)
+  lint.yml                             — code style checks
 ```
 
 > **Add here as you build:** when you create a new controller, middleware, or service class, add it to the folder structure above with a one-line description.
