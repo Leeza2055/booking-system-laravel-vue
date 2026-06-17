@@ -26,7 +26,7 @@
         department: '',
         specialization: '',
         bio: '',
-        base_fee: '',
+        base_fee: 0,
         is_active: true,
     });
 

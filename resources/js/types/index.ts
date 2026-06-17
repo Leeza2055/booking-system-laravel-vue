@@ -6,6 +6,7 @@ export * from './ui';
 export interface Service {
     id: number;
     name: string;
+    description: string;
     duration_minutes: number;
     price: number;
     is_active: boolean;

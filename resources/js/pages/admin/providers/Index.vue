@@ -55,6 +55,7 @@
                     </TableRow>
                 </TableHeader>
                 <TableBody>
+                    <template v-if="providers.length">
                     <TableRow v-for="provider in providers" :key="provider.id">
                         <TableCell class="font-medium">
                             {{ provider.user.name }}
@@ -70,6 +71,13 @@
                             </Button>
                         </TableCell>
                     </TableRow>
+                    </template>
+                    <TableRow v-else>
+                        <TableCell colspan="7" class="text-center py-8 text-muted-foreground">
+                            No providers found. 
+                            <Link :href="create()" class="underline">Add the first one.</Link>
+                        </TableCell>
+                    </TableRow> 
                 </TableBody>
             </Table>
         </div>
