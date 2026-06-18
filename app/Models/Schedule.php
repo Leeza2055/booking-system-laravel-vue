@@ -16,10 +16,14 @@ class Schedule extends Model
     /** @use HasFactory<ScheduleFactory> */
     use HasFactory;
 
+    public $appends = ['day_of_week_label'];
+
     protected function casts(): array
     {
         return [
             'day_of_week' => DayOfWeek::class,
+            'start_time' => 'datetime:h:i A',
+            'end_time' => 'datetime:h:i A',
         ];
     }
 
@@ -29,5 +33,10 @@ class Schedule extends Model
     public function provider(): BelongsTo
     {
         return $this->belongsTo(Provider::class);
+    }
+
+    public function getDayOfWeekLabelAttribute(): string
+    {
+        return $this->day_of_week->name;
     }
 }

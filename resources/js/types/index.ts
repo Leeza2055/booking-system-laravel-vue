@@ -11,6 +11,16 @@ export interface Service {
     price: number;
     is_active: boolean;
 }
+export interface Schedule {
+    id: number;
+    day_of_week: number; 
+    day_of_week_label: string;
+    start_time: string;
+    end_time: string;
+    slot_duration_minutes: number;
+    is_active: boolean;
+
+}
 export interface Provider {
     id: number;
     user: User;
@@ -20,6 +30,7 @@ export interface Provider {
     base_fee: number;
     is_active: boolean;  
     services?: Service[];
+    schedules?: Schedule[];
 }
 
 

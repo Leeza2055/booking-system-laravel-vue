@@ -11,5 +11,4 @@ enum DayOfWeek: int
     case Thursday = 4;
     case Friday = 5;
     case Saturday = 6;
-
 }
