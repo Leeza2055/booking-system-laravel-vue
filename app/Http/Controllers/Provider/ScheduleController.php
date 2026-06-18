@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Provider;
 
 use App\Http\Controllers\Controller;
 use App\Models\Schedule;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -27,7 +28,7 @@ class ScheduleController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('provider/schedules/Create');
     }
@@ -35,7 +36,7 @@ class ScheduleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'day_of_week' => ['required', 'integer', 'between:0,6', Rule::unique('schedules')->where(fn ($query) => $query->where('provider_id', Auth::user()->provider?->id)
@@ -70,7 +71,7 @@ class ScheduleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Schedule $schedule)
+    public function update(Request $request, Schedule $schedule): RedirectResponse
     {
         // Ensure this schedule belongs to the logged-in provider
         if ($schedule->provider_id !== Auth::user()->provider?->id) {
