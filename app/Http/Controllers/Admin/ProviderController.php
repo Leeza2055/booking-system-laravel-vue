@@ -53,9 +53,12 @@ class ProviderController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make('password'), // You should generate a secure password and send it to the provider
+        ]);
+
+        $user->forceFill([
             'role' => UserRole::Provider,
             'email_verified_at' => now(),
-        ]);
+        ])->save();
 
         $user->provider()->create([
             'department' => $validated['department'],

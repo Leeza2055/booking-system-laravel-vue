@@ -20,7 +20,7 @@ return new class extends Migration
             $table->time('end_time');
             $table->unsignedSmallInteger('slot_duration_minutes')->default(30);
             $table->boolean('is_active')->default(true);
-            $table->unique(['provider_id', 'day_of_week', 'start_time']);
+            $table->unique(['provider_id', 'day_of_week']);
             $table->timestamps();
         });
     }

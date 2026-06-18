@@ -27,7 +27,7 @@
         description: props.service.description,
         duration_minutes: props.service.duration_minutes,
         price: props.service.price,
-        is_active: props.service.is_active,
+        is_active: Boolean(props.service.is_active),
     });
 
     function submit() {

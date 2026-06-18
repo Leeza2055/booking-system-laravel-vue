@@ -10,6 +10,7 @@
     TableHeader,
     TableRow,
     } from '@/components/ui/table';
+    import { useTimeFormat } from '@/composables/useTimeFormat'
     import { index, create, edit } from '@/routes/provider/schedules';
     import type { Schedule } from '@/types';
 
@@ -27,6 +28,10 @@
             ],
         },
     });
+    
+    const { formatTime } = useTimeFormat()
+
+
 </script>
 
 <template>
@@ -53,8 +58,8 @@
                     <template v-if="schedules.length">
                         <TableRow v-for="schedule in schedules" :key="schedule.id">
                             <TableCell class="max-w-xs truncate">{{ schedule.day_of_week_label }}</TableCell>
-                            <TableCell>{{ schedule.start_time }}</TableCell>
-                            <TableCell>{{ schedule.end_time }}</TableCell>
+                            <TableCell>{{ formatTime(schedule.start_time) }}</TableCell>
+                            <TableCell>{{ formatTime(schedule.end_time) }}</TableCell>
                             <TableCell>{{ schedule.slot_duration_minutes }}</TableCell>
                             <TableCell class="text-center"><span :class="[schedule.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800', 'border px-2 py-1']">{{ schedule.is_active ? 'Active' : 'Inactive' }}</span></TableCell>
                             <TableCell class="text-center">

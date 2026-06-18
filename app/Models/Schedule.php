@@ -16,14 +16,20 @@ class Schedule extends Model
     /** @use HasFactory<ScheduleFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'day_of_week',
+        'start_time',
+        'end_time',
+        'slot_duration_minutes',
+        'is_active',
+    ];
+
     public $appends = ['day_of_week_label'];
 
     protected function casts(): array
     {
         return [
             'day_of_week' => DayOfWeek::class,
-            'start_time' => 'datetime:h:i A',
-            'end_time' => 'datetime:h:i A',
         ];
     }
 
