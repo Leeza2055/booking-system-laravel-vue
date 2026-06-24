@@ -15,6 +15,17 @@ class Booking extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'provider_id',
+        'service_id',
+        'customer_id',
+        'booking_date',
+        'start_time',
+        'end_time',
+        'status',
+        'notes',
+    ];
+
     protected function casts(): array
     {
         return [
