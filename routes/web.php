@@ -25,6 +25,7 @@ Route::middleware(['auth', 'verified', 'provider'])->prefix('provider')->name('p
 
 Route::middleware(['auth', 'verified', 'customer'])->group(function () {
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
 });
 
 Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index');

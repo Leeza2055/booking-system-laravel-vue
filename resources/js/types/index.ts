@@ -33,4 +33,15 @@ export interface Provider {
     schedules?: Schedule[];
 }
 
+export interface Booking {
+    id: number;
+    provider: Provider;
+    service: Service;
+    booking_date: string;
+    start_time: string;
+    end_time: string;
+    notes: string | null;
+    status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+}
+
 

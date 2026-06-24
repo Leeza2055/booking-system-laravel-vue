@@ -12,6 +12,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class BookingController extends Controller
 {
@@ -61,5 +63,16 @@ class BookingController extends Controller
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Your booking has been created successfully!');
+    }
+
+    public function index(): Response
+    {
+        $bookings = Booking::with(['provider.user', 'service'])
+            ->where('customer_id', Auth::id())
+            ->get();
+
+        return Inertia::render('bookings/Index', [
+            'bookings' => $bookings,
+        ]);
     }
 }
