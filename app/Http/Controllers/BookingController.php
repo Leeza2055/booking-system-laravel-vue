@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\BookingStatus;
 use App\Models\Booking;
 use App\Models\Provider;
+use App\Models\Service;
 use App\Services\SlotGeneratorService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -31,11 +32,14 @@ class BookingController extends Controller
             'provider_id' => 'required|exists:providers,id',
             'service_id' => 'required|exists:services,id',
             'booking_date' => 'required|date|after_or_equal:today',
-            'start_time' => 'required|date_format:H:i, H:i:s',
+            'start_time' => 'required|date_format:H:i,H:i:s',
             'notes' => 'nullable|string|max:1000',
         ]);
 
+        /** @var Provider $provider */
         $provider = Provider::findOrFail($validated['provider_id']);
+
+        /** @var Service $service */
         $service = $provider->services()->findOrFail($validated['service_id']);
 
         $availableSlots = app(SlotGeneratorService::class)->getAvailableSlots($provider, $validated['booking_date']);

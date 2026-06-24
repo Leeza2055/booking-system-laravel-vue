@@ -17,6 +17,7 @@ class SlotGeneratorService
         //
     }
 
+    /** @return Collection<int, string> */
     public function getAvailableSlots(Provider $provider, string $date): Collection
     {
         $carbonDate = Carbon::parse($date);
