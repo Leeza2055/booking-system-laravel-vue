@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid } from '@lucide/vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import { BookOpen, FolderGit2, LayoutGrid, Briefcase, Calendar } from '@lucide/vue';
+import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -15,27 +16,70 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { index as adminProvidersIndex } from '@/routes/admin/providers';
 import { index as bookingsIndex } from '@/routes/bookings';
+import { index as providerBookingIndex } from '@/routes/provider/bookings';
+import { index as schedulesIndex } from '@/routes/provider/schedules';
+import { index as servicesIndex } from '@/routes/provider/services';
 import { index } from '@/routes/providers';
 import type { NavItem } from '@/types';
+import type { User } from '@/types';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Providers',
-        href: index(),
-        icon: BookOpen,
-    },
-    {
-        title: 'Bookings',
-        href: bookingsIndex(),
-        icon: BookOpen,
+const page = usePage()
+const user = computed(() => page.props.auth.user as User | null)
+
+const mainNavItems = computed((): NavItem[] =>{
+    const items: NavItem[]  = [
+        {
+            title: 'Dashboard',
+            href: dashboard(),
+            icon: LayoutGrid,
+        },
+    ]
+
+    if (user.value?.role === 'customer') {
+        items.push({
+            title: 'Providers',
+            href: index(),
+            icon: BookOpen,
+        })
+
+        items.push({
+            title: 'Bookings',
+            href: bookingsIndex(),
+            icon: BookOpen,
+        })
     }
-];
+
+    if (user.value?.role === 'provider') {
+        items.push({
+            title: 'Services',
+            href: servicesIndex(),
+            icon: Briefcase,
+        })
+        items.push({
+            title: 'Schedules',
+            href: schedulesIndex(),
+            icon: Calendar,
+        })
+        items.push({
+            title: 'Bookings',
+            href: providerBookingIndex(),
+            icon: BookOpen,
+        })
+    }
+
+    if (user.value?.role === 'admin') {
+        items.push({
+            title: 'Providers',
+            href: adminProvidersIndex(),
+            icon: BookOpen,
+        })
+    }
+
+    return items
+
+});
 
 const footerNavItems: NavItem[] = [
     {

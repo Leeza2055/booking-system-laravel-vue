@@ -35,6 +35,7 @@ export interface Provider {
 
 export interface Booking {
     id: number;
+    customer: User;
     provider: Provider;
     service: Service;
     booking_date: string;
